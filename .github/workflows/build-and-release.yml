@@ -60,6 +60,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
+          New-Item -ItemType Directory -Force -Path release
           Compress-Archive -Path dist\text-engine\* -DestinationPath release\text-engine-windows-${{ matrix.arch }}.zip
 
       - name: Zip the folder on Linux/macOS
