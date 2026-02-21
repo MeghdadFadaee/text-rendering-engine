@@ -1,0 +1,13 @@
+[project]
+name = "text-rendering-engine"
+version = "0.1.0"
+description = "Photoshop-like text rendering engine built with Python + Pillow"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "arabic-reshaper>=3.0.0",
+    "numpy>=2.4.2",
+    "pillow>=12.1.1",
+    "pydantic>=2.12.5",
+    "python-bidi>=0.6.7",
+]

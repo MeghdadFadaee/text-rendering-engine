@@ -1,0 +1,46 @@
+{
+  "font_path": "assets/Vazirmatn-Regular.ttf",
+  "font_size": 90,
+  "center": [800, 450],
+
+  "fill": {
+    "type": "gradient",
+    "colors": ["#ff0080", "#7928ca"],
+    "direction": "vertical"
+  },
+
+  "stroke": {
+    "enabled": true,
+    "width": 4,
+    "color": "#000000"
+  },
+
+  "shadow": {
+    "enabled": true,
+    "offset": [8, 8],
+    "blur": 15,
+    "color": "#000000",
+    "opacity": 0.6
+  },
+
+  "outer_glow": {
+    "enabled": true,
+    "offset": [8, 8],
+    "blur": 20,
+    "color": "#ff00ff",
+    "opacity": 0.5
+  },
+
+  "inner_shadow": {
+    "enabled": false,
+    "offset": [3, 3],
+    "blur": 10,
+    "color": "#000000",
+    "opacity": 0.5
+  },
+
+  "letter_spacing": 5,
+  "line_height": 1.2,
+  "rotation": 0,
+  "opacity": 1.0
+}
