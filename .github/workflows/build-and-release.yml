@@ -52,7 +52,7 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - name: PyInstaller folder build
+      - name: PyInstaller directory build
         run: |
           pyinstaller main.py --name text-engine
 
