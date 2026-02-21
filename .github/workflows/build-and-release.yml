@@ -1,0 +1,84 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        include:
+
+          # Linux AMD64
+          - os: linux
+            arch: amd64
+            runner: ubuntu-latest
+
+          # Linux ARM64
+          - os: linux
+            arch: arm64
+            runner: ubuntu-24.04-arm
+
+          # Windows AMD64
+          - os: windows
+            arch: amd64
+            runner: windows-latest
+
+          # macOS Intel
+          - os: macos
+            arch: amd64
+            runner: macos-13
+
+          # macOS ARM (Apple Silicon)
+          - os: macos
+            arch: arm64
+            runner: macos-14
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: PyInstaller folder build
+        run: |
+          pyinstaller main.py --name text-engine
+
+      - name: Create project zip
+        run: |
+          mkdir -p release
+          cd dist
+          zip -r ../release/text-engine-${{ matrix.os }}-${{ matrix.arch }}.zip text-engine
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os }}-${{ matrix.arch }}
+          path: |
+            release/*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
