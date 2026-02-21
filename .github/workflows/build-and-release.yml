@@ -30,15 +30,15 @@ jobs:
             arch: amd64
             runner: windows-latest
 
-          # macOS Intel
-          - os: macos
-            arch: amd64
-            runner: macos-13
+          # # macOS Intel
+          # - os: macos
+          #   arch: amd64
+          #   runner: macos-13
 
-          # macOS ARM (Apple Silicon)
-          - os: macos
-            arch: arm64
-            runner: macos-14
+          # # macOS ARM (Apple Silicon)
+          # - os: macos
+          #   arch: arm64
+          #   runner: macos-14
 
     steps:
       - uses: actions/checkout@v4
@@ -56,7 +56,14 @@ jobs:
         run: |
           pyinstaller main.py --name text-engine
 
-      - name: Create project zip
+      - name: Zip the folder on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Compress-Archive -Path dist\text-engine\* -DestinationPath release\text-engine-windows-${{ matrix.arch }}.zip
+
+      - name: Zip the folder on Linux/macOS
+        if: runner.os != 'Windows'
         run: |
           mkdir -p release
           cd dist
